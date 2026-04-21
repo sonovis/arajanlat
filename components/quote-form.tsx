@@ -256,7 +256,7 @@ export function QuoteForm() {
                   />
 
                   <div className="flex items-center px-3 border border-l-0 rounded-r-md text-sm text-muted-foreground bg-muted">
-                    Ft
+                    Ft/db
                   </div>
                 </div>
 
@@ -299,7 +299,7 @@ export function QuoteForm() {
           <FieldGroup>
             <Field orientation="horizontal" className="items-center">
               <FieldLabel htmlFor="discount" className="flex-shrink-0">
-                Kedvezmény (%)
+                Kedvezmény
               </FieldLabel>
               <div className="flex items-stretch">
                   <Input
