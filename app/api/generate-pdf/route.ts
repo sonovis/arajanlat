@@ -44,7 +44,7 @@ export async function POST(req: Request) {
       [
         "compile",
         "--font-path",
-        fontDir,
+        dstFontsDir,
         inputPath,
         outputPath,
       ],
