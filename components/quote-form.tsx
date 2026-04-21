@@ -228,35 +228,51 @@ export function QuoteForm() {
                 </Select>
                 <FieldError errors={[form.formState.errors.items?.[index]?.productId]} />
               </Field>
+              
+              <Field className="w-full sm:w-36">
+                <div className="flex items-stretch">
+                  <Input
+                    type="number"
+                    min={1}
+                    {...form.register(`items.${index}.quantity`)}
+                    className="rounded-r-none"
+                  />
 
-              <Field className="w-full sm:w-24">
-                <Input
-                  type="number"
-                  min={1}
-                  {...form.register(`items.${index}.quantity`)}
-                />
+                  <div className="flex items-center px-3 border border-l-0 rounded-r-md text-sm text-muted-foreground bg-muted">
+                    db
+                  </div>
+                </div>
+
                 <FieldError errors={[form.formState.errors.items?.[index]?.quantity]} />
               </Field>
 
               <Field className="w-full sm:w-36">
-                <Input
-                  type="number"
-                  min={0}
-                  {...form.register(`items.${index}.price`)}
-                />
+                <div className="flex items-stretch">
+                  <Input
+                    type="number"
+                    min={0}
+                    {...form.register(`items.${index}.price`)}
+                    className="rounded-r-none"
+                  />
+
+                  <div className="flex items-center px-3 border border-l-0 rounded-r-md text-sm text-muted-foreground bg-muted">
+                    Ft
+                  </div>
+                </div>
+
                 <FieldError errors={[form.formState.errors.items?.[index]?.price]} />
               </Field>
 
-		<Button
-		  type="button"
-		  variant="ghost"
-		  size="icon"
-		  onClick={() => remove(index)}
-		  disabled={fields.length === 1}
-		  className="text-destructive hover:bg-destructive/20 hover:text-destructive"
-		>
-		  <Trash2 className="size-4" />
-		</Button>
+		          <Button
+		            type="button"
+		            variant="ghost"
+		            size="icon"
+		            onClick={() => remove(index)}
+		            disabled={fields.length === 1}
+		            className="text-destructive hover:bg-destructive/20 hover:text-destructive"
+		          >
+		            <Trash2 className="size-4" />
+		          </Button>
             </div>
           ))}
 
@@ -285,14 +301,20 @@ export function QuoteForm() {
               <FieldLabel htmlFor="discount" className="flex-shrink-0">
                 Kedvezmény (%)
               </FieldLabel>
-              <Input
-                id="discount"
-                type="number"
-                min={0}
-                max={100}
-                className="w-24"
-                {...form.register("discount")}
-              />
+              <div className="flex items-stretch">
+                  <Input
+                    id="discount"
+                    type="number"
+                    min={0}
+                    max={100}
+                    className="w-24 rounded-r-none"
+                    {...form.register("discount")}
+                  />
+
+                  <div className="flex items-center px-3 border border-l-0 rounded-r-md text-sm text-muted-foreground bg-muted">
+                    %
+                  </div>
+                </div>
             </Field>
 
             <div className="space-y-2 rounded-lg bg-muted/50 p-4">
