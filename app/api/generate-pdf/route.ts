@@ -22,26 +22,36 @@ export async function POST(req: Request) {
 
   await fs.writeFile(inputPath, template);
 
-  await fs.copyFile(
-    path.join(process.cwd(), "public/logo-text-color.svg"),
-    path.join(tmpDir, "logo-text-color.svg")
-  );
+  const srcFontsDir = path.join(process.cwd(), "public/assets");
+  const dstFontsDir = path.join(tmpDir, "assets");
 
-  await fs.copyFile(
-    path.join(process.cwd(), "public/Vonalak.png"),
-    path.join(tmpDir, "Vonalak.png")
-  );
+  await fs.mkdir(dstFontsDir, { recursive: true });
+
+  const fontFiles = await fs.readdir(srcFontsDir);
+
+  for (const file of fontFiles) {
+    await fs.copyFile(
+      path.join(srcFontsDir, file),
+      path.join(dstFontsDir, file)
+    );
+  }
 
   const typstPath = path.join(process.cwd(), "bin/typst");
 
   await new Promise<void>((resolve, reject) => {
     execFile(
       typstPath,
-      ["compile", inputPath, outputPath],
+      [
+        "compile",
+        "--font-path",
+        fontDir,
+        inputPath,
+        outputPath,
+      ],
       {
         env: {
           ...process.env,
-          HOME: "/tmp", // Vercel edge case fix
+          HOME: "/tmp",
         },
       },
       (err) => {

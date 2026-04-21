@@ -40,8 +40,8 @@
 
 #set page(
   background: context {
-    place(bottom, dy: 12pt, dx: 43pt, rotate(-6deg, origin: bottom + left, image("Vonalak.png", fit: "contain", width: 115%)))
-    place(bottom + right, image("logo-text-color.svg", fit: "contain", width: 25%), dy: -35pt, dx: -70pt)
+    place(bottom, dy: 12pt, dx: 43pt, rotate(-6deg, origin: bottom + left, image("assets/Vonalak.png", fit: "contain", width: 115%)))
+    place(bottom + right, image("assets/logo-text-color.svg", fit: "contain", width: 25%), dy: -35pt, dx: -70pt)
   },
   margin: (bottom: 200pt)
 )
