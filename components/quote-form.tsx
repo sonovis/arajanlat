@@ -229,7 +229,7 @@ export function QuoteForm() {
                 <FieldError errors={[form.formState.errors.items?.[index]?.productId]} />
               </Field>
               
-              <Field className="w-full sm:w-36">
+              <Field className="w-full sm:w-48">
                 <div className="flex items-stretch">
                   <Input
                     type="number"
@@ -246,7 +246,7 @@ export function QuoteForm() {
                 <FieldError errors={[form.formState.errors.items?.[index]?.quantity]} />
               </Field>
 
-              <Field className="w-full sm:w-36">
+              <Field className="w-full sm:w-48">
                 <div className="flex items-stretch">
                   <Input
                     type="number"
@@ -255,7 +255,7 @@ export function QuoteForm() {
                     className="rounded-r-none"
                   />
 
-                  <div className="flex items-center w-full px-3 border border-l-0 rounded-r-md text-sm text-muted-foreground bg-muted">
+                  <div className="flex items-center sm:w-24 px-3 border border-l-0 rounded-r-md text-sm text-muted-foreground bg-muted">
                     Ft/db
                   </div>
                 </div>
