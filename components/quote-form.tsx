@@ -255,7 +255,7 @@ export function QuoteForm() {
                     className="rounded-r-none"
                   />
 
-                  <div className="flex items-center px-3 border border-l-0 rounded-r-md text-sm text-muted-foreground bg-muted">
+                  <div className="flex items-center w-full px-3 border border-l-0 rounded-r-md text-sm text-muted-foreground bg-muted">
                     Ft/db
                   </div>
                 </div>
