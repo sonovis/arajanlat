@@ -21,24 +21,34 @@ export async function POST(req: Request) {
   const outputPath = path.join(tmpDir, "out.pdf");
 
   await fs.writeFile(inputPath, template);
-  
+
   await fs.copyFile(
-	  path.join(process.cwd(), "public/logo-text-color.svg"),
-	  "/tmp/logo-text-color.svg"
-	);
+    path.join(process.cwd(), "public/logo-text-color.svg"),
+    path.join(tmpDir, "logo-text-color.svg")
+  );
 
+  await fs.copyFile(
+    path.join(process.cwd(), "public/Vonalak.png"),
+    path.join(tmpDir, "Vonalak.png")
+  );
 
-	await fs.copyFile(
-	  path.join(process.cwd(), "public/Vonalak.png"),
-	  "/tmp/Vonalak.png"
-	);
+  const typstPath = path.join(process.cwd(), "bin/typst");
 
-
-  await new Promise((res, rej) => {
-    execFile("typst", ["compile", inputPath, outputPath], (err) => {
-      if (err) rej(err);
-      else res(null);
-    });
+  await new Promise<void>((resolve, reject) => {
+    execFile(
+      typstPath,
+      ["compile", inputPath, outputPath],
+      {
+        env: {
+          ...process.env,
+          HOME: "/tmp", // Vercel edge case fix
+        },
+      },
+      (err) => {
+        if (err) reject(err);
+        else resolve();
+      }
+    );
   });
 
   const pdf = await fs.readFile(outputPath);
