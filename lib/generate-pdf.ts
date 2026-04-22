@@ -15,7 +15,7 @@ export async function generateAndDownloadPdf(data: QuoteData) {
   const a = document.createElement("a");
 
   a.href = url;
-  a.download = "arajanlat.pdf";
+  a.download = data.fajlnev;
   a.click();
 
   URL.revokeObjectURL(url);

@@ -9,6 +9,7 @@ import { hu } from "date-fns/locale"
 import { CalendarIcon, Plus, Trash2, FileDown } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
+import { ButtonGroup } from "@/components/ui/button-group"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Calendar } from "@/components/ui/calendar"
@@ -29,6 +30,18 @@ import { generateAndDownloadPdf } from "@/lib/generate-pdf"
 import type { QuoteData } from "@/lib/typst-template"
 import { cn } from "@/lib/utils"
 
+const placeholders = [
+  "Mészáros és Társa Holding Zrt.",
+  "Budapesti Román Kulturális Intézet",
+  "Media Crew Bt.",
+  "Inflow Kortárs Művészetekért Egyesület",
+  "Ferenczy Múzeumi Centrum",
+  "Kacsakő Bisztró Kft.",
+]
+
+const randomPlaceholder =
+  placeholders[Math.floor(Math.random() * placeholders.length)]
+
 const lineItemSchema = z.object({
   productId: z.string().min(1, "Válassz terméket"),
   quantity: z.coerce.number().min(1, "Minimum 1"),
@@ -39,6 +52,7 @@ const formSchema = z.object({
   customerName: z.string().min(1, "Kötelező mező"),
   customerAddress: z.string().min(1, "Kötelező mező"),
   description: z.string().min(1, "Kötelező mező"),
+  fajlnev: z.string(),
   date: z.date({ required_error: "Válassz dátumot" }),
   discount: z.coerce.number().min(0).max(100).default(0),
   items: z.array(lineItemSchema).min(1, "Legalább egy tétel szükséges"),
@@ -57,6 +71,7 @@ export function QuoteForm() {
       customerName: "",
       customerAddress: "",
       description: "",
+      fajlnev: "Árajánlat.pdf",
       discount: 0,
       items: [{ productId: "", quantity: 1, price: 0 }],
     },
@@ -91,6 +106,7 @@ export function QuoteForm() {
         megrendelő: data.customerName,
         megrendelő_cím: data.customerAddress,
         feladat_leírása: data.description,
+        fajlnev: data.fajlnev,
         datum: {
           year: data.date.getFullYear(),
           month: data.date.getMonth() + 1,
@@ -131,7 +147,7 @@ export function QuoteForm() {
               <FieldLabel htmlFor="customerName">Megrendelő neve</FieldLabel>
               <Input
                 id="customerName"
-                placeholder="pl. Wavy Budapest"
+                placeholder={`pl. ${randomPlaceholder}`}
                 {...form.register("customerName")}
               />
               <FieldError errors={[form.formState.errors.customerName]} />
@@ -337,19 +353,28 @@ export function QuoteForm() {
         </CardContent>
       </Card>
 
-      <Button type="submit" size="lg" className="w-full" disabled={isExporting}>
-        {isExporting ? (
-          <>
-            <Spinner className="mr-2" />
-            PDF generálása...
-          </>
-        ) : (
-          <>
-            <FileDown className="mr-2 size-5" />
-            Exportálás PDF-be
-          </>
-        )}
-      </Button>
+      <Field>
+	      <ButtonGroup>
+          <Input
+	          id="fajlnev"
+	          placeholder="Árajánlat.pdf"
+	          {...form.register("fajlnev")}
+	        />
+          <Button type="submit" disabled={isExporting}>
+            {isExporting ? (
+              <>
+                <Spinner className="mr-2" />
+                PDF generálása...
+              </>
+            ) : (
+              <>
+                <FileDown className="mr-2 size-5" />
+                Exportálás PDF-be
+              </>
+            )}
+          </Button>
+        </ButtonGroup>
+	    </Field>
     </form>
   )
 }
