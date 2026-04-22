@@ -30,18 +30,6 @@ import { generateAndDownloadPdf } from "@/lib/generate-pdf"
 import type { QuoteData } from "@/lib/typst-template"
 import { cn } from "@/lib/utils"
 
-const placeholders = [
-  "Mészáros és Társa Holding Zrt.",
-  "Budapesti Román Kulturális Intézet",
-  "Media Crew Bt.",
-  "Inflow Kortárs Művészetekért Egyesület",
-  "Ferenczy Múzeumi Centrum",
-  "Kacsakő Bisztró Kft.",
-]
-
-const randomPlaceholder =
-  placeholders[Math.floor(Math.random() * placeholders.length)]
-
 const lineItemSchema = z.object({
   productId: z.string().min(1, "Válassz terméket"),
   quantity: z.coerce.number().min(1, "Minimum 1"),
@@ -64,6 +52,17 @@ type FormValues = z.infer<typeof formSchema>
 export function QuoteForm() {
   const [isExporting, setIsExporting] = useState(false)
   
+  const placeholders = [
+    "Mészáros és Társa Holding Zrt.",
+    "Budapesti Román Kulturális Intézet",
+    "Media Crew Bt.",
+    "Inflow Kortárs Művészetekért Egyesület",
+    "Ferenczy Múzeumi Centrum",
+    "Kacsakő Bisztró Kft.",
+  ]
+
+  const randomPlaceholder = placeholders[Math.floor(Math.random() * placeholders.length)]
+
   const inventory = useInventory()
 
   const form = useForm<FormValues>({
