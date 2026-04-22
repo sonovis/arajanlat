@@ -51,6 +51,7 @@ const lineItemSchema = z.object({
 const formSchema = z.object({
   customerName: z.string().min(1, "Kötelező mező"),
   customerAddress: z.string().min(1, "Kötelező mező"),
+  customerTaxID: z.string(),
   description: z.string().min(1, "Kötelező mező"),
   fajlnev: z.string(),
   date: z.date({ required_error: "Válassz dátumot" }),
@@ -70,6 +71,7 @@ export function QuoteForm() {
     defaultValues: {
       customerName: "",
       customerAddress: "",
+      customerTaxID: "",
       description: "",
       fajlnev: "Árajánlat.pdf",
       discount: 0,
@@ -105,6 +107,7 @@ export function QuoteForm() {
       const quoteData: QuoteData = {
         megrendelő: data.customerName,
         megrendelő_cím: data.customerAddress,
+        megrendelő_adószám: data.customerTaxID,
         feladat_leírása: data.description,
         fajlnev: data.fajlnev,
         datum: {
@@ -161,6 +164,15 @@ export function QuoteForm() {
                 {...form.register("customerAddress")}
               />
               <FieldError errors={[form.formState.errors.customerAddress]} />
+            </Field>
+
+            <Field>
+              <FieldLabel htmlFor="customerTaxID">Megrendelő adószáma</FieldLabel>
+              <Input
+                id="customerTaxID"
+                placeholder="12345678-9-01"
+                {...form.register("customerTaxID")}
+              />
             </Field>
           </FieldGroup>
         </CardContent>

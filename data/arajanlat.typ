@@ -2,6 +2,7 @@
 
 #let megrendelő = data.megrendelő
 #let megrendelő_cím = data.megrendelő_cím
+#let megrendelő_adószám = data.megrendelő_adószám
 #let feladat_leírása = data.feladat_leírása
 #let datum = datetime(
   year: data.datum.year,
@@ -71,7 +72,8 @@ Sonovis Event Tech Kft. \
 \
 == Megrendelő
 #megrendelő \
-#megrendelő_cím
+#megrendelő_cím \
+#megrendelő_adószám
 
 #pagebreak()
 
